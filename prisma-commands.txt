@@ -1,0 +1,29 @@
+npx prisma init
+Initialize prisma project
+
+npx prisma generate
+Generate Prisma Client with schema.prisma model
+
+npx prisma generate --watch
+Previous command and watch for changes in schema
+
+npx prisma format
+Formats the Prisma schema file
+
+npx prisma db push
+Pushes the state of schema.prisma to the database without using migrations
+
+npx prisma migrate dev
+Update database using migrations during development
+
+npx prisma migrate dev --create-only 
+Creates a new migration based on the changes in schema but not apply that migration
+
+npx prisma migrate dev --preview-feature
+Update database using the previuos migration
+
+npx prisma migrate reset
+Reset and clean database
+
+npx prisma studio
+Open interactive CLI on browser to see database tables and data

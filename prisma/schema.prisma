@@ -1,0 +1,109 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Users {
+  id                 Int       @id @default(autoincrement())
+  name               String
+  last_name          String
+  maternal_name      String?
+  phone              String?
+  email              String
+  password           String
+  token_confirmation String
+  token_keys         String
+  deleted            Boolean   @default(false)
+  created_at         DateTime  @default(now())
+  updated_at         DateTime  @updatedAt
+  deleted_at         DateTime?
+
+  // Reference to Keys (1:N = 1 User to Many Keys)
+  Keys Keys[]
+
+  // Reference to Users (1:N = 1 UserStatus to Many Users)
+  UsersStatus UsersStatus @relation(fields: [status_id], references: [id])
+  status_id   Int
+
+  @@map(name: "users")
+}
+
+model UsersStatus {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  deleted     Boolean   @default(false)
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  deleted_at  DateTime?
+
+  // Reference to Users (1:N = 1 UserStatus to Many Users)
+  Users Users[]
+
+  @@map(name: "users_status")
+}
+
+model Keys {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  password    String
+  access      String[]
+  url         String?
+  img         String?
+  deleted     Boolean   @default(false)
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  deleted_at  DateTime?
+
+  // Reference to Users (1:N = 1 User to Many Keys)
+  Users   Users @relation(fields: [user_id], references: [id])
+  user_id Int
+
+  // Reference to Keys (1:N = 1 KeyCategory to Many Keys)
+  KeysCategories KeysCategories? @relation(fields: [category_id], references: [id])
+  category_id    Int?
+
+  // Reference to KeysOptions (M:N = Many Keys to Many KeysOptions)
+  KeysOptions KeysOptions[]
+
+  @@map(name: "keys")
+}
+
+model KeysCategories {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  img         String?
+  deleted     Boolean   @default(false)
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  deleted_at  DateTime?
+
+  // Reference to Keys (1:N = 1 KeyCategory to Many Keys)
+  Keys Keys[]
+
+  @@map(name: "keys_categories")
+}
+
+model KeysOptions {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String
+  deleted     Boolean   @default(false)
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  deleted_at  DateTime?
+
+  // Reference to Keys (M:N = Many Keys to Many KeysOptions)
+  Keys Keys[]
+
+  @@map(name: "keys_options")
+}

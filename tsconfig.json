@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "sourceMap": true,
+    "rootDir": "./src",  
+    "outDir": "./build",
+    "removeComments": true, 
+    "strict": true,
+    "noImplicitAny": true,                
+    "strictNullChecks": true,              
+    "strictFunctionTypes": true,           
+    "strictBindCallApply": true,           
+    "strictPropertyInitialization": true,  
+    "noImplicitThis": true,                
+    "alwaysStrict": true,
+    "target": "es6",   
+    "lib": ["esnext"],
+    "baseUrl": "./", 
+    "paths": {
+      "*": [
+          "node_modules/*",
+      ]
+    }, 
+    "types": ["node"],   
+    "esModuleInterop": true,
+    "skipLibCheck": true,                    
+    "forceConsistentCasingInFileNames": true
+  },
+  "exclude": [
+    "prisma/*"
+  ]
+}
